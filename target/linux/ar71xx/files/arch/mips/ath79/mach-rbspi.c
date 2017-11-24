@@ -12,6 +12,7 @@
  *  - MikroTik RouterBOARD 750 r2
  *  - MikroTik RouterBOARD LHG 5nD
  *  - MikroTik RouterBOARD wAP2nD
+ *  - MikroTik RouterBOARD OmniTikPG-5HacD
  *
  *  Preliminary support for the following hardware
  *  - MikroTik RouterBOARD cAP2nD
@@ -485,6 +486,81 @@ static struct gpio_keys_button rblhg_gpio_keys[] __initdata = {
 	},
 };
 
+/* RB OmniTikPG-5HacD gpios */
+#define OMNIPG_GPIO_LED_USER_POWER	3
+#define OMNIPG_GPIO_USB_POWER		13
+
+static struct gpio_led omnipg_leds[] __initdata = {
+	{
+		.name = "rb:blue:power",
+		.gpio = OMNIPG_GPIO_LED_USER_POWER,
+		.active_low = 1,
+		.default_state = LEDS_GPIO_DEFSTATE_ON,
+	},
+};
+
+static const struct ar8327_led_info omnipg_leds_ar8327[] = {
+		AR8327_LED_INFO(PHY0_0, HW, "rb:yellow:port1"),
+		AR8327_LED_INFO(PHY1_0, HW, "rb:yellow:port2"),
+		AR8327_LED_INFO(PHY2_0, HW, "rb:yellow:port3"),
+		AR8327_LED_INFO(PHY3_0, HW, "rb:yellow:port4"),
+		AR8327_LED_INFO(PHY4_0, HW, "rb:yellow:port5"),
+};
+
+static struct ar8327_pad_cfg omnipg_ar8327_pad0_cfg = {
+		.mode = AR8327_PAD_MAC_RGMII,
+		.txclk_delay_en = true,
+		.rxclk_delay_en = true,
+		.txclk_delay_sel = AR8327_CLK_DELAY_SEL1,
+		.rxclk_delay_sel = AR8327_CLK_DELAY_SEL2,
+		.mac06_exchange_dis = true,
+};
+
+static struct ar8327_pad_cfg omnipg_ar8327_pad6_cfg = {
+		/* Use SGMII interface for GMAC6 of the AR8337 switch */
+		.mode = AR8327_PAD_MAC_SGMII,
+		.rxclk_delay_en = true,
+		.rxclk_delay_sel = AR8327_CLK_DELAY_SEL0,
+};
+
+static struct ar8327_led_cfg omnipg_ar8327_led_cfg = {
+		.led_ctrl0 = 0xc737c737,
+		.led_ctrl1 = 0x00000000,
+		.led_ctrl2 = 0x00000000,
+		.led_ctrl3 = 0x0030c300,
+		.open_drain = false,
+};
+
+static struct ar8327_platform_data omnipg_ar8327_data = {
+		.pad0_cfg = &omnipg_ar8327_pad0_cfg,
+		.pad6_cfg = &omnipg_ar8327_pad6_cfg,
+		.port0_cfg = {
+				.force_link = 1,
+				.speed = AR8327_PORT_SPEED_1000,
+				.duplex = 1,
+				.txpause = 1,
+				.rxpause = 1,
+		},
+		.port6_cfg = {
+				.force_link = 1,
+				.speed = AR8327_PORT_SPEED_1000,
+				.duplex = 1,
+				.txpause = 1,
+				.rxpause = 1,
+		},
+		.led_cfg = &omnipg_ar8327_led_cfg,
+		.num_leds = ARRAY_SIZE(omnipg_leds_ar8327),
+		.leds = omnipg_leds_ar8327,
+};
+
+static struct mdio_board_info omnipg_mdio0_info[] = {
+		{
+				.bus_id = "ag71xx-mdio.0",
+				.phy_addr = 0,
+				.platform_data = &omnipg_ar8327_data,
+		},
+};
+
 
 static struct gen_74x164_chip_platform_data rbspi_ssr_data = {
 	.base = RBSPI_SSR_GPIO_BASE,
@@ -956,6 +1032,66 @@ static void __init rbmap_setup(void)
 	ath79_register_gpio_keys_polled(-1, RBSPI_KEYS_POLL_INTERVAL,
 					ARRAY_SIZE(rbspi_gpio_keys_reset16),
 					rbspi_gpio_keys_reset16);
+}
+
+/*
+ * Init the OmniTIK 5 PoE ac / RBOmniTikPG-5HacD hardware (QCA9557).
+ * The OmniTIK 5 PoE ac has 5 ethernet ports provided by an AR8337 switch. Port 1 is
+ * assigned to WAN, ports 2-5 are assigned to LAN. Port 0 is connected to the
+ * SoC, ports 1-5 of the switch are connected to physical ports 1-5 in order.
+ * Wireless is provided by a 2.4GHz radio on the SoC (WLAN1) and a 5GHz radio
+ * attached via PCI (QCA9882). Red and green WLAN LEDs are populated however
+ * they are not attached to GPIOs, extra work is required to support these.
+ * PoE and USB output power control is supported.
+ */
+static void __init omnipg_setup(void)
+{
+	u32 flags = RBSPI_HAS_USB | RBSPI_HAS_POE | RBSPI_HAS_PCI;
+
+	if (rbspi_platform_setup())
+		return;
+
+	rbspi_peripherals_setup(flags);
+
+	/* Do not call rbspi_network_setup as we have a discrete switch chip */
+	ath79_eth0_pll_data.pll_1000 = 0xae000000;
+	ath79_eth0_pll_data.pll_100 = 0xa0000101;
+	ath79_eth0_pll_data.pll_10 = 0xa0001313;
+
+	ath79_register_mdio(0, 0x0);
+	mdiobus_register_board_info(omnipg_mdio0_info,
+					ARRAY_SIZE(omnipg_mdio0_info));
+
+	ath79_setup_qca955x_eth_cfg(QCA955X_ETH_CFG_RGMII_EN);
+
+	ath79_init_mac(ath79_eth0_data.mac_addr, ath79_mac_base, 0);
+	ath79_eth0_data.phy_if_mode = PHY_INTERFACE_MODE_RGMII;
+	ath79_eth0_data.phy_mask = BIT(0);
+	ath79_eth0_data.mii_bus_dev = &ath79_mdio0_device.dev;
+	ath79_register_eth(0);
+
+	/* WLAN1 MAC is HW MAC + 7 */
+	rbspi_wlan_init(1, 7);
+
+	if (flags & RBSPI_HAS_USB)
+		gpio_request_one(RB962_GPIO_USB_POWER,
+				GPIOF_OUT_INIT_HIGH | GPIOF_EXPORT_DIR_FIXED,
+				"USB power");
+
+	/* PoE output GPIO is inverted, set GPIOF_ACTIVE_LOW for consistency */
+	/*if (flags & RBSPI_HAS_POE)
+		gpio_request_one(RB962_GPIO_POE_POWER,
+				GPIOF_OUT_INIT_HIGH | GPIOF_ACTIVE_LOW |
+					GPIOF_EXPORT_DIR_FIXED,
+				"POE power");*/
+
+	ath79_register_leds_gpio(-1, ARRAY_SIZE(omnipg_leds),
+				omnipg_leds);
+
+	/* This device has a single reset button as gpio 20 */
+	ath79_register_gpio_keys_polled(-1, RBSPI_KEYS_POLL_INTERVAL,
+					ARRAY_SIZE(rbspi_gpio_keys_reset20),
+					rbspi_gpio_keys_reset20);
 }
 
 
