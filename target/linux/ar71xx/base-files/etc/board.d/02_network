@@ -194,6 +194,7 @@ ar71xx_setup_interfaces()
 	rb-751g|\
 	rb-951g-2hnd|\
 	rb-962uigs-5hact2hnt|\
+	rb-omnitikpg-5hacd|\
 	wlr8100|\
 	wzr-hp-g450h)
 		ucidef_add_switch "switch0" \
