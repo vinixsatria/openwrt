@@ -983,7 +983,7 @@ ar71xx_board_detect() {
 	*"RouterBOARD wAP 2nD r2")
 		name="rb-wap-2nd"
 		;;
-	*"RouterBOARD OmniTIK 5 PoE ac")
+	*"RouterBOARD OmniTIK PG-5HacD")
 		name="rb-omnitikpg-5hacd"
 		;;
 	*"RouterStation")
