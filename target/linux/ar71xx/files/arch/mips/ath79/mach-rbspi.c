@@ -1040,7 +1040,7 @@ static void __init rbmap_setup(void)
  * assigned to WAN, ports 2-5 are assigned to LAN. Port 0 is connected to the
  * SoC, ports 1-5 of the switch are connected to physical ports 1-5 in order.
  * Wireless is provided by a 2.4GHz radio on the SoC (WLAN1) and a 5GHz radio
- * attached via PCI (QCA9882). Red and green WLAN LEDs are populated however
+ * attached via PCI (QCA9892). Red and green WLAN LEDs are populated however
  * they are not attached to GPIOs, extra work is required to support these.
  * PoE and USB output power control is supported.
  */
@@ -1074,7 +1074,7 @@ static void __init omnipg_setup(void)
 	rbspi_wlan_init(1, 7);
 
 	if (flags & RBSPI_HAS_USB)
-		gpio_request_one(RB962_GPIO_USB_POWER,
+		gpio_request_one(OMNIPG_GPIO_USB_POWER,
 				GPIOF_OUT_INIT_HIGH | GPIOF_EXPORT_DIR_FIXED,
 				"USB power");
 
