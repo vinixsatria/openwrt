@@ -494,7 +494,7 @@ static struct gpio_led omnipg_leds[] __initdata = {
 	{
 		.name = "rb:blue:power",
 		.gpio = OMNIPG_GPIO_LED_USER_POWER,
-		.active_low = 1,
+		.active_low = 0,
 		.default_state = LEDS_GPIO_DEFSTATE_ON,
 	},
 };
