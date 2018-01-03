@@ -321,8 +321,7 @@ get_status_led() {
 	rb-962uigs-5hact2hnt|\
 	rb-lhg-5nd|\
 	rb-map-2nd|\
-	rb-mapl-2nd|\
-	rb-omnitikpg-5hacd)
+	rb-mapl-2nd)
 		status_led="rb:green:user"
 		;;
 	rb-951ui-2hnd)
@@ -333,6 +332,9 @@ get_status_led() {
 	rb-sxt2n|\
 	rb-sxt5n)
 		status_led="rb:green:power"
+		;;
+	rb-omnitikpg-5hacd)
+		status_led="rb:blue:power"
 		;;
 	re450|\
 	sc300m)
