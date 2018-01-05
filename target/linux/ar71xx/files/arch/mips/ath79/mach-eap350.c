@@ -59,9 +59,9 @@ static struct gpio_keys_button eap350_gpio_keys[] __initdata = {
 static void __init eap350_setup(void)
 {
 	u8 *art = (u8 *)KSEG1ADDR(0x1f7f0000);
-
-	ath79_gpio_function_setup(AR724X_GPIO_FUNC_JTAG_DISABLE);
 /*
+	ath79_gpio_function_setup(AR724X_GPIO_FUNC_JTAG_DISABLE);
+
 	ath79_register_leds_gpio(-1, ARRAY_SIZE(eap350_leds_gpio),
 					eap350_leds_gpio);
 	ath79_register_gpio_keys_polled(-1, EAP350_KEYS_POLL_INTERVAL,
