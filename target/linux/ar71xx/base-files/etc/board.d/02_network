@@ -73,6 +73,7 @@ ar71xx_setup_interfaces()
 	dr342|\
 	eap120|\
 	eap300v2|\
+	eap350|\
 	eap7660d|\
 	el-mini|\
 	fritz300e|\
