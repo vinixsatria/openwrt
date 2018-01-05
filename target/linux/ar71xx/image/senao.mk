@@ -23,7 +23,7 @@ define Device/eap350
   KERNEL_SIZE := 1024k
   IMAGE_SIZE := 5952k
   IMAGES += factory.bin
-  MTDPARTS := spi0.0:256k(u-boot)ro,64k(u-boot-env),320k(custom)ro,1024k(kernel),4928k(rootfs),1536k(failsafe)ro,64k(art)ro,5952k@0xa0000(firmware)
+  MTDPARTS := spi0.0:256k(u-boot)ro,64k(u-boot-env),320k(custom)ro,5952k(firmware),1536k(failsafe)ro,64k(art)ro
   IMAGE/factory.bin/squashfs := append-rootfs | pad-rootfs | senao-factory-image eap350 $$$$@
   IMAGE/sysupgrade.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-rootfs | pad-rootfs | check-size $$$$(IMAGE_SIZE)
 endef
