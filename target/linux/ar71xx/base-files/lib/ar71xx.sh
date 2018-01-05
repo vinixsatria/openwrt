@@ -628,6 +628,9 @@ ar71xx_board_detect() {
 	*"EAP300 v2")
 		name="eap300v2"
 		;;
+	*"EAP350")
+		name="eap350"
+		;;
 	*"EAP7660D")
 		name="eap7660d"
 		;;
