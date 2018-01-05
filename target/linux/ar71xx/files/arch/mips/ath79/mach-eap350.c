@@ -17,6 +17,8 @@
 #include <asm/mach-ath79/ath79.h>
 
 #include "common.h"
+#include "pci.h"
+#include "dev-ap9x-pci.h"
 #include "dev-eth.h"
 #include "dev-gpio-buttons.h"
 #include "dev-leds-gpio.h"
@@ -56,3 +58,29 @@ static struct gpio_keys_button eap350_gpio_keys[] __initdata = {
 */
 static void __init eap350_setup(void)
 {
+	u8 *art = (u8 *)KSEG1ADDR(0x1f7f0000);
+
+	ath79_gpio_function_setup(AR724X_GPIO_FUNC_JTAG_DISABLE);
+/*
+	ath79_register_leds_gpio(-1, ARRAY_SIZE(eap350_leds_gpio),
+					eap350_leds_gpio);
+	ath79_register_gpio_keys_polled(-1, EAP350_KEYS_POLL_INTERVAL,
+					ARRAY_SIZE(eap350_gpio_keys),
+					eap350_gpio_keys);
+*/
+	ath79_register_m25p80(NULL);
+	ath79_register_mdio(0, 0x0);
+
+	ath79_eth0_data.phy_if_mode = PHY_INTERFACE_MODE_RGMII;
+	ath79_eth0_data.speed = SPEED_100;
+	ath79_eth0_data.duplex = DUPLEX_FULL;
+	ath79_eth0_data.phy_mask = BIT(4);
+	ath79_init_mac(ath79_eth0_data.mac_addr, art, 0);
+	ath79_register_eth(0);
+
+	ath79_register_pci();
+	ath79_register_wmac(art, NULL);
+}
+
+MIPS_MACHINE(ATH79_MACH_EAP350, "EAP350", "EnGenius EAP350",
+	     eap350_setup);
