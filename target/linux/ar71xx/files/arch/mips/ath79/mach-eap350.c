@@ -78,8 +78,7 @@ static void __init eap350_setup(void)
 	ath79_init_mac(ath79_eth0_data.mac_addr, art, 0);
 	ath79_register_eth(0);
 
-	ath79_register_pci();
-	ath79_register_wmac(art + 0x1000, NULL);
+	ap91_pci_init(art + 0x1000, NULL);
 }
 
 MIPS_MACHINE(ATH79_MACH_EAP350, "EAP350", "EnGenius EAP350",
