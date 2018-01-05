@@ -17,6 +17,18 @@ define Build/senao-factory-image
 endef
 
 
+define Device/eap350
+  DEVICE_TITLE := EnGenius EAP350
+  BOARDNAME := EAP350
+  KERNEL_SIZE := 1024k
+  IMAGE_SIZE := 5952k
+  IMAGES += factory.bin
+  MTDPARTS := spi0.0:256k(u-boot)ro,64k(u-boot-env),320k(custom)ro,1024k(kernel),4928k(rootfs),1536k(failsafe)ro,64k(art)ro,5952k@0xa0000(firmware)
+  IMAGE/factory.bin/squashfs := append-rootfs | pad-rootfs | senao-factory-image eap350 $$$$@
+  IMAGE/sysupgrade.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-rootfs | pad-rootfs | check-size $$$$(IMAGE_SIZE)
+endef
+
+TARGET_DEVICES += ens202ext
 define Device/ens202ext
   DEVICE_TITLE := EnGenius ENS202EXT
   BOARDNAME := ENS202EXT
