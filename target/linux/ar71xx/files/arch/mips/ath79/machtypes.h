@@ -98,6 +98,7 @@ enum ath79_mach_type {
 	ATH79_MACH_DRAGINO2,			/* Dragino Version 2 */
 	ATH79_MACH_EAP120,			/* TP-LINK EAP120 */
 	ATH79_MACH_EAP300V2,			/* EnGenius EAP300 v2 */
+	ATH79_MACH_EAP350,			/* EnGenius EAP350 */
 	ATH79_MACH_EAP7660D,			/* Senao EAP7660D */
 	ATH79_MACH_EBR_2310_C1,			/* D-link EBR-2310 rev. C1 */
 	ATH79_MACH_EL_M150,			/* EasyLink EL-M150 */
