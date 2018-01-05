@@ -27,8 +27,8 @@ define Device/eap350
   IMAGE/factory.bin/squashfs := append-rootfs | pad-rootfs | senao-factory-image eap350 $$$$@
   IMAGE/sysupgrade.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-rootfs | pad-rootfs | check-size $$$$(IMAGE_SIZE)
 endef
+TARGET_DEVICES += eap350
 
-TARGET_DEVICES += ens202ext
 define Device/ens202ext
   DEVICE_TITLE := EnGenius ENS202EXT
   BOARDNAME := ENS202EXT
@@ -40,4 +40,4 @@ define Device/ens202ext
   IMAGE/factory.bin/squashfs := append-rootfs | pad-rootfs | senao-factory-image ens202ext $$$$@
   IMAGE/sysupgrade.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-rootfs | pad-rootfs | check-size $$$$(IMAGE_SIZE)
 endef
-TARGET_DEVICES += ens202ext eap350
+TARGET_DEVICES += ens202ext
