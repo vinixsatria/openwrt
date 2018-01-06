@@ -4,7 +4,8 @@ define Build/senao-factory-image
 
 	mkdir -p $@.senao
 
-	touch $@.senao/FWINFO-OpenWrt-$(REVISION)-$(board)
+	touch $@.senao/before-upgrade.sh
+	touch $@.senao/FWINFO-$(BOARDNAME)-OpenWrt-v9.9.9-$(REVISION).txt
 	$(CP) $(IMAGE_KERNEL) $@.senao/openwrt-senao-$(board)-uImage-lzma.bin
 	$(CP) $(rootfs) $@.senao/openwrt-senao-$(board)-root.squashfs
 
