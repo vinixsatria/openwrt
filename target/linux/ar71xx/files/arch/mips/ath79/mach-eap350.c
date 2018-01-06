@@ -25,25 +25,11 @@
 #include "dev-m25p80.h"
 #include "dev-wmac.h"
 #include "machtypes.h"
-/*
-#define EAP350_KEYS_POLL_INTERVAL     20
-#define EAP350_KEYS_DEBOUNCE_INTERVAL	(3 * EAP300V2_KEYS_POLL_INTERVAL)
 
-tatic struct gpio_led eap350_leds_gpio[] __initdata = {
-	{
-		.name		= "engenius:blue:power",
-		.gpio		= EAP300V2_GPIO_LED_POWER,
-		.active_low	= 1,
-	}, {
-		.name		= "engenius:blue:lan",
-		.gpio		= EAP300V2_GPIO_LED_LAN,
-		.active_low	= 1,
-	}, {
-		.name		= "engenius:blue:wlan",
-		.gpio		= EAP300V2_GPIO_LED_WLAN,
-		.active_low	= 1,
-	}
-};
+#define EAP350_GPIO_BTN_RESET		0
+
+#define EAP350_KEYS_POLL_INTERVAL     	20
+#define EAP350_KEYS_DEBOUNCE_INTERVAL	(3 * EAP300V2_KEYS_POLL_INTERVAL)
 
 static struct gpio_keys_button eap350_gpio_keys[] __initdata = {
 	{
@@ -55,19 +41,15 @@ static struct gpio_keys_button eap350_gpio_keys[] __initdata = {
 		.active_low	= 1,
 	}
 };
-*/
+
 static void __init eap350_setup(void)
 {
 	u8 *art = (u8 *)KSEG1ADDR(0x1f7f0000);
-/*
-	ath79_gpio_function_setup(AR724X_GPIO_FUNC_JTAG_DISABLE);
 
-	ath79_register_leds_gpio(-1, ARRAY_SIZE(eap350_leds_gpio),
-					eap350_leds_gpio);
 	ath79_register_gpio_keys_polled(-1, EAP350_KEYS_POLL_INTERVAL,
 					ARRAY_SIZE(eap350_gpio_keys),
 					eap350_gpio_keys);
-*/
+
 	ath79_register_m25p80(NULL);
 	ath79_register_mdio(0, 0x0);
 
