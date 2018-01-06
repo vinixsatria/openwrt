@@ -29,7 +29,7 @@
 #define EAP350_GPIO_BTN_RESET		0
 
 #define EAP350_KEYS_POLL_INTERVAL     	20
-#define EAP350_KEYS_DEBOUNCE_INTERVAL	(3 * EAP300V2_KEYS_POLL_INTERVAL)
+#define EAP350_KEYS_DEBOUNCE_INTERVAL	(3 * EAP350_KEYS_POLL_INTERVAL)
 
 static struct gpio_keys_button eap350_gpio_keys[] __initdata = {
 	{
