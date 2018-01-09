@@ -97,6 +97,19 @@ define Device/pbr-d1
 endef
 TARGET_DEVICES += pbr-d1
 
+define Device/tl-wr802n-v4
+  $(Device/tplink)
+  DTS := TL-WR802NV4
+  IMAGE_SIZE := 7808k
+  DEVICE_TITLE := TP-Link TL-WR802N v4
+  TPLINK_FLASHLAYOUT := 8Mmtk
+  TPLINK_HWID := 0x08020004
+  TPLINK_HWREV := 0x1
+  TPLINK_HWREVADD := 0x4
+  TPLINK_HVERSION := 3
+endef
+TARGET_DEVICES += tl-wr840n-v4
+
 define Device/tl-wr840n-v4
   $(Device/tplink)
   DTS := TL-WR840NV4

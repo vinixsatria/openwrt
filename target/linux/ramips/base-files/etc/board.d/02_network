@@ -242,6 +242,7 @@ ramips_setup_interfaces()
 	mzk-ex750np|\
 	na930|\
 	pbr-d1|\
+	tl-wr802n-v4|\
 	u25awf-h1|\
 	wli-tx4-ag300n|\
 	wmdr-143n|\
