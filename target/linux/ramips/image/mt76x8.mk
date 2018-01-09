@@ -108,7 +108,7 @@ define Device/tl-wr802n-v4
   TPLINK_HWREVADD := 0x4
   TPLINK_HVERSION := 3
 endef
-TARGET_DEVICES += tl-wr840n-v4
+TARGET_DEVICES += tl-wr802n-v4
 
 define Device/tl-wr840n-v4
   $(Device/tplink)
