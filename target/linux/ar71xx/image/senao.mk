@@ -22,11 +22,9 @@ define Device/eap350
   DEVICE_TITLE := EnGenius EAP350
   BOARDNAME := EAP350
   IMAGE_SIZE := 5952k
-  KERNEL_SIZE := 1536k
   IMAGES += factory.bin
   MTDPARTS := spi0.0:256k(u-boot)ro,64k(u-boot-env),320k(custom)ro,5952k(firmware),1536k(failsafe)ro,64k(art)ro
   IMAGE/factory.bin/squashfs := append-rootfs | pad-rootfs | senao-factory-image eap350 $$$$@
-  IMAGE/sysupgrade.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-rootfs | pad-rootfs | check-size $$$$(IMAGE_SIZE)
 endef
 TARGET_DEVICES += eap350
 
