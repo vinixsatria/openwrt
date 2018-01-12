@@ -232,6 +232,7 @@ platform_check_image() {
 	dr342|\
 	dr531|\
 	dragino2|\
+	eap350|\
 	ebr-2310-c1|\
 	ens202ext|\
 	epg5000|\
@@ -342,7 +343,6 @@ platform_check_image() {
 		;;
 	all0305|\
 	eap300v2|\
-	eap350|\
 	eap7660d|\
 	ja76pf|\
 	ja76pf2|\
