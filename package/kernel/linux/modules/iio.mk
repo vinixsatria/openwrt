@@ -118,3 +118,19 @@ define KernelPackage/iio-bmp280-spi/description
 endef
 
 $(eval $(call KernelPackage,iio-bmp280-spi))
+
+
+define KernelPackage/iio-opt3001
+  SUBMENU:=$(IIO_MENU)
+  TITLE:=Texas Instruments OPT3001/3006 Light Sensor
+  DEPENDS:=+kmod-i2c-core +kmod-iio-core
+  KCONFIG:=CONFIG_OPT3001
+  FILES:=$(LINUX_DIR)/drivers/iio/light/opt3001.ko
+  AUTOLOAD:=$(call AutoLoad,56,opt3001)
+endef
+define KernelPackage/iio-opt3001/description
+ This driver adds support for Texas Instruments OPT3001
+ and OPT3006 Light Sensor.
+endef
+
+$(eval $(call KernelPackage,iio-opt3001))
