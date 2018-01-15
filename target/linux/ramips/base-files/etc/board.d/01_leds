@@ -388,6 +388,12 @@ tl-wr841n-v13)
 	ucidef_set_led_switch "lan4" "lan4" "$boardname:green:lan4" "switch0" "0x10"
 	ucidef_set_led_switch "wan" "wan" "$boardname:green:wan" "switch0" "0x01"
 	;;
+tl-wr902ac-v3)
+	set_wifi_led "$boardname:green:wlan"
+	ucidef_set_led_default "power" "power" "$boardname:green:power" "1"
+	ucidef_set_led_netdev "lan" "lan" "$boardname:green:lan" eth0
+	set_usb_led "$boardname:green:usb"
+	;;
 tplink,tl-mr3420-v5)
 	set_usb_led "$boardname:green:usb"
 	set_wifi_led "$boardname:green:wlan"
