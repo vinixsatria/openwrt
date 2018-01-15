@@ -104,8 +104,8 @@ ${FDT}
 	};
 
 	configurations {
-		default = \"config@1\";
-		config@1 {
+		default = \"config@ap.jalapeno-v2\";
+		config@ap.jalapeno-v2 {
 			description = \"OpenWrt\";
 			kernel = \"kernel@1\";
 			fdt = \"fdt@1\";
