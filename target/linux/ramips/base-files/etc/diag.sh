@@ -42,6 +42,7 @@ get_status_led() {
 	tl-wr840n-v4|\
 	tl-wr840n-v5|\
 	tl-wr841n-v13|\
+	tl-wr902ac-v3|\
 	vr500|\
 	wnce2001|\
 	wndr3700v5|\
