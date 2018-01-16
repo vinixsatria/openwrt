@@ -129,7 +129,7 @@ TARGET_DEVICES += netgear_d7800
 define Device/8dev_jalapeno
 	$(call Device/FitImage)
 	$(call Device/UbiFit)
-	DEVICE_DTS := qcom-ipq4019-jalapeno
+	DEVICE_DTS := qcom-ipq4019-jalapeno-v2
 	KERNEL_LOADADDR := 0x80208000
 	KERNEL_INSTALL := 1
 	KERNEL_SIZE := 4048k
