@@ -24,14 +24,6 @@
 	model = "8devices Jalapeno v1";
 	compatible = "8dev,jalapeno", "qcom,ipq4019";
 
-	clocks {
-                xo: xo {
-                        compatible = "fixed-clock";
-                        clock-frequency = <48000000>;
-                        #clock-cells = <0>;
-                };
-	};
-
 	reserved-memory {
 		#address-cells = <0x1>;
 		#size-cells = <0x1>;
@@ -44,15 +36,6 @@
 	};
 
 	soc {
-
-		timer {
-			compatible = "arm,armv7-timer";
-			interrupts = <1 2 0xf08>,
-				     <1 3 0xf08>,
-				     <1 4 0xf08>,
-				     <1 1 0xf08>;
-			clock-frequency = <48000000>;
-		};
 
 		tcsr@194b000 {
 			/* select hostmode */
