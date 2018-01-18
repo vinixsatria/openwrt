@@ -132,7 +132,7 @@ define Device/8dev_jalapeno
 	BOARD_NAME := jalapeno
 	SUPPORTED_DEVICES := 8dev,jalapeno
 	DEVICE_TITLE := 8devices Jalapeno
-	DEVICE_PACKAGES := kmod-usb-phy-qcom-ipq4019 ath10k-firmware-qca4019 uboot-envtools
+	DEVICE_PACKAGES := ath10k-firmware-qca4019 uboot-envtools
 endef
 TARGET_DEVICES += 8dev_jalapeno
 
