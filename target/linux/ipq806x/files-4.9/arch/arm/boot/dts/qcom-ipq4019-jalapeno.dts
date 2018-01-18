@@ -21,7 +21,7 @@
 #include <dt-bindings/soc/qcom,tcsr.h>
 
 / {
-	model = "8devices Jalapeno v1";
+	model = "8devices Jalapeno";
 	compatible = "8dev,jalapeno", "qcom,ipq4019";
 
 	reserved-memory {
@@ -94,7 +94,7 @@
 				};
 				pinmux_cs {
 					function = "gpio";
-					pins = "gpio54", "gpio63";
+					pins = "gpio54", "gpio59";
 				};
 				pinconf {
 					pins =   "gpio55", "gpio56", "gpio57";
@@ -102,7 +102,7 @@
 					bias-disable;
 				};
 				pinconf_cs {
-					pins = "gpio54", "gpio63";
+					pins = "gpio54", "gpio59";
 					drive-strength = <2>;
 					bias-disable;
 					output-high;
@@ -156,7 +156,7 @@
 			pinctrl-0 = <&spi_0_pins>;
 			pinctrl-names = "default";
 			cs-gpios = <&tlmm 54 0>,
-					   <&tlmm 63 0>;
+					   <&tlmm 59 0>;
 			status = "ok";
 
 			mx25l25635e@0 {
