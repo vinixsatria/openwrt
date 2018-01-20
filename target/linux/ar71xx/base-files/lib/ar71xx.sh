@@ -343,36 +343,30 @@ tplink_board_detect() {
 }
 
 tplink_pharos_get_model_string() {
+	local version=$1
 	local part
 	part=$(find_mtd_part 'product-info')
 	[ -z "$part" ] && return 1
 
 	# The returned string will end with \r\n, but we don't remove it here
-	# to simplify matching against it in the sysupgrade image check
+	# to simplify matching against it in the sysupgrade image check.
+	# v1 and v2 boards use different format, so check for it.
+	if [ "$1" = "v2" ]
+	then
+	dd if=$part bs=1 skip=4360 count=64 2>/dev/null | tr -d '\r\0' | head -n 1
+	else
 	dd if=$part bs=1 skip=4360 2>/dev/null | head -n 1
+	fi
 }
 
 tplink_pharos_board_detect() {
-	local model_string="$(tplink_pharos_get_model_string | tr -d '\r')"
-	local oIFS="$IFS"; IFS=":"; set -- $model_string; IFS="$oIFS"
-
-	local model="${1%%\(*}"
-
-	AR71XX_MODEL="TP-Link $model v$2"
-}
-
-tplink_pharos_v2_get_model_string() {
-	local part
-	part=$(find_mtd_part 'product-info')
-	[ -z "$part" ] && return 1
-
-	# The returned string will end with \r\n, but we don't remove it here
-	# to simplify matching against it in the sysupgrade image check
-	dd if=$part bs=1 skip=4360 count=64 2>/dev/null | tr -d '\r\0' | head -n 1
-}
-
-tplink_pharos_v2_board_detect() {
-	local model_string="$(tplink_pharos_v2_get_model_string)"
+	local version=$1
+	if [ "$1" = "v2" ]
+	then
+	local model_string="$(tplink_pharos_get_model_string version)"
+	else
+	local model_string="$(tplink_pharos_get_model_string version | tr -d '\r')"
+	fi
 	local oIFS="$IFS"; IFS=":"; set -- $model_string; IFS="$oIFS"
 
 	local model="${1%%\(*}"
@@ -553,7 +547,7 @@ ar71xx_board_detect() {
 		;;
 	*"CPE210 v2")
 		name="cpe210-v2"
-		tplink_pharos_v2_board_detect
+		tplink_pharos_board_detect v2
 		;;
 	*"CPE505N")
 		name="cpe505n"
