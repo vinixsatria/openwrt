@@ -66,6 +66,13 @@ define Device/ubnt-bz
   UBNT_CHIP := ar7240
 endef
 
+define Device/ubnt-wa
+  $(Device/ubnt)
+  UBNT_TYPE := WA
+  UBNT_CHIP := ar934x
+  UBNT_BOARD := WA
+endef
+
 define Device/rw2458n
   $(Device/ubnt-xm)
   DEVICE_TITLE := Ubiquiti RW2458N
@@ -156,6 +163,19 @@ define Device/ubnt-nano-m-xw
   BOARDNAME := UBNT-NM-XW
 endef
 TARGET_DEVICES += ubnt-nano-m-xw
+
+define Device/litebeam-5ac-23
+  $(Device/ubnt-wa)
+  DEVICE_TITLE := Ubiquiti LiteBeam 5AC-23
+  BOARDNAME := UBNT-LITEBEAM-5AC-23
+  IMAGE_SIZE := 15744k
+  MTDPARTS := spi0.0:256k(u-boot)ro,64k(u-boot-env)ro,15744k(firmware),256k(cfg)ro,64k(EEPROM)ro
+  DEVICE_PACKAGES += kmod-ath10k ath10k-firmware-qca988x
+  IMAGES := sysupgrade.bin factory.bin
+  IMAGE/sysupgrade.bin := append-kernel | pad-to $$$$(BLOCKSIZE) | append-rootfs | pad-rootfs | check-size $$$$(IMAGE_SIZE)
+  IMAGE/factory.bin := $$(IMAGE/sysupgrade.bin) | mkubntimage-wa-split
+endef
+TARGET_DEVICES += litebeam-5ac-23
 
 define Device/ubnt-loco-m-xw
   $(Device/ubnt-xw)
