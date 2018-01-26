@@ -129,6 +129,7 @@
 					drive-strength = <2>;
 					bias-disable;
 				};
+			};
 		};
 
 		blsp_dma: dma@7884000 {
