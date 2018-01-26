@@ -116,7 +116,7 @@
 			};
 
 			i2c_0_pins: i2c_0_pinmux {
-				pins = "gpio12", "gpio13";
+				pins = "gpio3", "gpio4";
 				function = "blsp_i2c0";
 				bias-disable;
 			};
