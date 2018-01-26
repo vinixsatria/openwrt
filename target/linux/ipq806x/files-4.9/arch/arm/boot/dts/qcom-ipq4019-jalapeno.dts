@@ -119,10 +119,16 @@
 			};
 
 			i2c_0_pins: i2c_0_pinmux {
-				pins = "gpio3", "gpio4";
-				function = "blsp_i2c0";
-				bias-disable;
-			};
+				pinmux {
+					pins = "gpio3", "gpio4";
+					function = "blsp_i2c0";
+					bias-disable;
+				};
+				pinconf {
+					pins = "gpio3", "gpio4";
+					drive-strength = <2>;
+					bias-disable;
+				};
 		};
 
 		blsp_dma: dma@7884000 {
@@ -251,6 +257,12 @@
 					};
 				};
 			};
+		};
+
+		i2c_0: i2c@78b7000 {
+			pinctrl-0 = <&i2c_0_pins>;
+			pinctrl-names = "default";
+			status = "ok";
 		};
 
 		counter@4a1000 {
