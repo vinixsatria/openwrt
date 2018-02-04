@@ -14,6 +14,7 @@ platform_do_upgrade() {
 		platform_do_upgrade_linksys "$ARGV"
 		;;
 	netgear,d7800 |\
+	8dev,jalapeno |\
 	netgear,r7500 |\
 	netgear,r7500v2 |\
 	netgear,r7800 |\
