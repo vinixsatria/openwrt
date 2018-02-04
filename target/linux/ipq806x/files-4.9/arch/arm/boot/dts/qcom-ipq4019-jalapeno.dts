@@ -166,10 +166,10 @@
 
 		gpio-keys {
 			compatible = "gpio-keys";
-			wps {
-				label = "wps";
+			reset {
+				label = "reset";
 				gpios = <&tlmm 5 GPIO_ACTIVE_LOW>;
-				linux,code = <KEY_WPS_BUTTON>;
+				linux,code = <KEY_RESTART>;
 			};
 		};
 
