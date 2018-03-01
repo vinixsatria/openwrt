@@ -32,6 +32,9 @@
 #define TL_WR940N_V4_GPIO_LED_LAN1		8
 #define TL_WR940N_V4_GPIO_LED_WLAN		7
 #define TL_WR940N_V4_GPIO_LED_SYSTEM		5
+/* WR940N v6 specific GPIO*/
+#define TL_WR940N_V6_GPIO_LED_DIAG_ORANGE	15
+#define TL_WR940N_V6_GPIO_LED_WAN_BLUE		14
 
 #define TL_WR940N_V4_GPIO_BTN_RESET		1
 #define TL_WR940N_V4_GPIO_BTN_RFKILL		2
@@ -109,9 +112,14 @@ static struct gpio_keys_button tl_wr940n_v4_gpio_keys[] __initdata = {
 static struct gpio_led tl_wr940n_v6_leds_gpio[] __initdata = {
 	{
 		.name		= "tp-link:blue:wan",
-		.gpio		= TL_WR940N_V4_GPIO_LED_WAN_RED,
+		.gpio		= TL_WR940N_V6_GPIO_LED_WAN_BLUE,
 		.active_low	= 1,
-	}
+	},
+	{
+		.name		= "tp-link:orange:diag",
+		.gpio		= TL_WR940N_V6_GPIO_LED_DIAG_ORANGE,
+		.active_low	= 0,
+	},
 };
 
 

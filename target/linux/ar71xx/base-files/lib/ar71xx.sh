@@ -215,6 +215,9 @@ tplink_board_detect() {
 
 		[ "$hwid" = '08020002' -a "$mid" = '00000002' ] && hwver=' v2'
 		;;
+	"081000"*)
+		model="TP-Link TL-WR810N"
+		;;
 	"083000"*)
 		model="TP-Link TL-WA830RE"
 
@@ -516,6 +519,9 @@ ar71xx_board_detect() {
 	*"CF-E355AC")
 		name="cf-e355ac"
 		;;
+	*"CF-E375AC")
+		name="cf-e375ac"
+		;;
 	*"CF-E380AC v1")
 		name="cf-e380ac-v1"
 		;;
@@ -663,6 +669,9 @@ ar71xx_board_detect() {
 		;;
 	*"ESR900")
 		name="esr900"
+		;;
+	*"eTactica EG-200")
+		name="rme-eg200"
 		;;
 	*"FRITZ!WLAN Repeater 300E")
 		name="fritz300e"
@@ -864,6 +873,9 @@ ar71xx_board_detect() {
 		;;
 	*"Rambutan"*)
 		name="rambutan"
+		;;
+	*"RE355")
+		name="re355"
 		;;
 	*"RE450")
 		name="re450"
